@@ -1,5 +1,5 @@
 # First install the python 3.8, the slim version uses less space
-FROM python:3.8.12-slim
+FROM python:3.10-slim
 
 # Install pipenv library in Docker 
 RUN pip install pipenv
@@ -20,4 +20,4 @@ COPY ["*.py", "model_C=1.0.bin", "./"]
 EXPOSE 9696
 
 # If we run the Docker image, we want our churn app to be running
-ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:9696", "churn_serving:app"]
+ENTRYPOINT ["waitress-serve","--listen=0.0.0.0:9696","predict:app"]
